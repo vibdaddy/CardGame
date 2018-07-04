@@ -1,41 +1,44 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Created by vaibhavsharma on 7/3/18.
  */
 public class Player {
-    //int numPlayers;
+
     static boolean isPlaying;
-    static String password;
-    static int pID;
+    String password;
+    int pID;
     String playerName;
-    //static int numDecks;
-    static HashMap<String, Integer> playerHand = new HashMap<String, Integer>();
+    double balance;
+    HashMap<String, Integer> playerHand = new HashMap<String, Integer>();
 
     public Player(){
-
         setID(Counter.count());
-
-        //setName(name);
-
-        //setPassword(pw);
-
         setFalse();
-
+        balance = 100;
     }
 
-    public static void setID(int ID){
+    public void withdraw(int amount){
+        balance = balance - amount;
+        System.out.println(amount + " was withdrawn from your account, " + getName() + ". Your new balance is: " + getBalance());
+    }
+
+    public void deposit(int amount){
+        balance = balance + amount;
+        System.out.println(amount + " was deposited to your account, " + getName() + ". Your new balance is: " + getBalance());
+    }
+
+    public double getBalance(){
+        return balance;
+    }
+
+    public void setID(int ID){
         pID = ID;
     }
 
-    public static int getID(){
+    public int getID(){return pID;}
 
-        return pID;
-    }
-
-    /*public static void setDecks(int num){
-        numDecks = num;
-    }*/
 
     public void setName(String name){
         playerName = name;
@@ -47,32 +50,79 @@ public class Player {
 
     public static void setTrue(){
         isPlaying = true;
-        //return isPlaying;
     }
 
     public static void setFalse(){
         isPlaying = false;
-        //return isPlaying;
     }
 
     public static boolean getPlayerStatus(){
         return isPlaying;
     }
 
-    public static void setPassword(String pw){
+    public void setPassword(String pw){
         password = pw;
     }
 
-    public static void showHand(){
+    public void showHand(){
         System.out.println(playerHand);
     }
-    public static void dealCards(int numCards){
+
+    public void dealCards(int numCards){
         for(int i=0; i<numCards; i++){
+            String card = Deck.cardGen();
+            if(playerHand.get(card) == null){
+                playerHand.put(card, 1);
+                //playerHand = true;
+            }
+            else if(playerHand.get(card)>= Deck.getNumDecks()){
+                System.out.println("MAX LIMIT OF CARDS IN DECK HAS BEEN REACHED");
+                System.out.println("Would you like to add more decks? Answer Y/N");
+                Scanner psc = new Scanner(System.in);
+                String answer = psc.nextLine();
+                if(answer.equals("YES") || answer.equals("yes") || answer.equals("y") || answer.equals("Y")){
+                    boolean answerValidation = false;
+                    while(answerValidation==false){
+                        int enteredNumber = 0;
+                        Scanner myScanner = new Scanner(System.in);
+                        boolean numberError = false;
+                        String enteredString = "";
+                        do {
+                            try {
+                                System.out.print("Enter number of decks you would like to add");
+                                enteredString = myScanner.next();  //Read into a string
+                                enteredNumber = Integer.parseInt(enteredString.trim());  //then cast as a integer
+                                numberError = false;  //if we haven't bailed out, then the number must be valid.
+                            } catch (Exception e) {
+                                System.out.println("Your entry: \"" +
+                                        enteredString + "\" is invalid...Please try again");
+                                numberError = true;  //Uh-Oh...We have a problem.
+                            }
+                        } while (numberError == true);  //Keep asking the user until the correct number is entered.
+                        Deck.addDecks(enteredNumber);
+                    }
+                }
+
+                //continue;
+            }
+            else if(playerHand.get(card)>=1){
+                playerHand.put(card, playerHand.get(card)+1);
+                //conditionsMet = true;
+            }
             //playerHand.put(Deck.cardGen(),)
         }
     }
 
     public void welcomeMessage(){
         System.out.println("Welcome " + getName() + "! Your player ID is: " + getID());
+    }
+
+    public void overview(){
+        System.out.println("Player name: " + playerName);
+        System.out.println("Player ID: " + pID);
+        System.out.println("Password: " + password);
+        System.out.println("Balance: " + getBalance());
+        System.out.println("Hand: ");
+        showHand();
     }
 }

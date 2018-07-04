@@ -10,7 +10,7 @@ public class Deck {
         HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
     }*/
 
-    HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
+    static HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
 
     public static boolean conditionsMet;
 
@@ -25,7 +25,15 @@ public class Deck {
         System.out.println("The number of decks has been set! We will be using " + numDecks + " deck(s)");
     }
 
-    public String cardGen() { //this method randomly generates the suit
+    public static void addDecks(int num){
+        numDecks = numDecks + num;
+    }
+
+    public static int getNumDecks(){
+        return numDecks;
+    }
+
+    public static String cardGen() { //this method randomly generates the suit
         while(conditionsMet == false){
             String suit = "HDCS"; //string that contains all of the suits
             Random rand1 = new Random();

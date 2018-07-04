@@ -99,9 +99,9 @@ public class Driver {
         }
 
         for(int i=0; i<playerList.size(); i++){
-            System.out.println(playerList.get(i).getName());
+            playerList.get(i).deposit(100);
+            playerList.get(i).withdraw(100);
         }
-
 
     }
 }
