@@ -6,25 +6,26 @@ import java.util.Random;
  */
 public class Deck {
 
-    /*public Deck(){
-        static HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
+    /*public Deck() {
+        HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
     }*/
 
-    static HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
+    HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
 
     public static boolean conditionsMet;
 
     public static String card;
 
-    static int numDecks;
+    public static int numDecks;
 
     public static int counter;
 
     public static void setDecks(int num){
         numDecks = num;
+        System.out.println("The number of decks has been set! We will be using " + numDecks + " deck(s)");
     }
 
-    public static String cardGen() { //this method randomly generates the suit
+    public String cardGen() { //this method randomly generates the suit
         while(conditionsMet == false){
             String suit = "HDCS"; //string that contains all of the suits
             Random rand1 = new Random();
@@ -78,7 +79,7 @@ public class Deck {
         conditionsMet = false;
         return card;
     }
-    static void printMap(){
+    void printMap(){
         System.out.println(cardTracker);
     }
 }
