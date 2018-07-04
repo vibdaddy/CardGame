@@ -35,14 +35,17 @@ public class Driver {
 
         List<Player> playerList = new ArrayList<Player>();
         Player tmpPlayer = null;
+        int playersLeft = enteredNumber;
         for(int i=0; i<enteredNumber; i++){
             tmpPlayer = new Player();
-            int playersLeft = (playerList.size() - 1) - i;
-            System.out.println(playersLeft);
+            //System.out.println(playersLeft);
             System.out.println("Enter player name: ");
             Scanner psc = new Scanner(System.in);
             String playerName = psc.nextLine();
             tmpPlayer.setName(playerName);
+            playerList.add(tmpPlayer);
+            playerList.get(i).welcomeMessage();
+            playersLeft--;
             if (playersLeft > 1) {
                 System.out.println("There are " + playersLeft + " player names left to enter");
             } else if (playersLeft == 1) {
@@ -50,9 +53,9 @@ public class Driver {
             } else if (playersLeft == 0) {
                 System.out.println("All player names have been entered!");
             }
-            playerList.add(tmpPlayer);
+
             //System.out.println(playerList.get(i).getName());
-            playerList.get(i).welcomeMessage();
+
         }
 
         for(int i=0; i<playerList.size(); i++){
