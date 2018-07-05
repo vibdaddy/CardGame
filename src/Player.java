@@ -14,6 +14,7 @@ public class Player {
     private String playerName;
     private double balance;
     private boolean winner;
+    private double bettingAmount;
     HashMap<String, Integer> playerHand = new HashMap<String, Integer>();
     List<String> cardHolder = new ArrayList<String>();
 
@@ -21,6 +22,14 @@ public class Player {
         setID(Counter.count());
         setFalse();
         balance = 100;
+    }
+
+    public void bet(int amount){
+        bettingAmount = bettingAmount + amount;
+    }
+
+    public double getBettingAmount(){
+        return bettingAmount;
     }
 
     public List<String> getCardHolder(){

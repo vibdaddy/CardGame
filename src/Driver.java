@@ -121,13 +121,15 @@ public class Driver {
     }
 
     public static void highCard(List<Player> pList){
+        //Game made by Vaibhav Sharma
+        String[] cardRank = {};
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!!!!!!!WELCOME TO HIGH CARD!!!!!!!!");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         for(int i=0; i<pList.size(); i++){
-            System.out.println("Is " + pList.get(i).getName() + " playing? Y/N");
+            System.out.println("Is " + pList.get(i).getName() + " playing? Keep in mind it is required that you put up $1 to play the game. Answer Y/N");
             boolean validAns = false;
             while(validAns == false){
                 Scanner psc3 = new Scanner(System.in);
@@ -154,6 +156,15 @@ public class Driver {
             }
 
         }
+        System.out.println("Now that we have sorted out who is playing, let's begin!");
+        System.out.println("The rules of the game are very simple.");
+        System.out.println("The player with the highest card wins!");
+        System.out.println("If both players have identical cards, the suit will determine the winner");
+        System.out.println("The ranking of suits in ascending order is as follows: Hearts -> Diamonds -> Clubs -> Spades");
+        System.out.println("EXAMPLE: If player one has an Ace of spades and player two has an Ace of hearts, player one will win the hand");
+        System.out.println("An Ace is only treated as the high card, not one in any case");
+        System.out.println("NOTE, the only time a tie will occur is if players are using more than one deck");
+        System.out.println("If there is a tie (for example player 1 has an Ace of Spades and player 2 has the same card) the pot will be split amongst the winners");
 
         clear();
 
@@ -164,7 +175,13 @@ public class Driver {
                 continue;
             }
             pList.get(i).dealCards(1);
-            System.out.println(pList.get(i).getCardHolder().get(0));
+            //System.out.println(pList.get(i).getCardHolder().get(0));
+        }
+
+        for(int i=0; i<pList.size(); i++) {
+            if (pList.get(i).getPlayerStatus() == false) {
+                continue;
+            }
         }
     }
 
