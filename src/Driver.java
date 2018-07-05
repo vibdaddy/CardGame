@@ -105,7 +105,9 @@ public class Driver {
             playerList.get(i).showHand();
         }*/
 
-        testDeal(playerList);
+        //testDeal(playerList);
+
+        highCard(playerList);
 
     }
 
@@ -115,5 +117,49 @@ public class Driver {
             pList.get(i).dealCards(27);
             pList.get(i).showHand();
         }
+    }
+
+    public static void highCard(List<Player> pList){
+        for(int i=0; i<pList.size(); i++){
+            System.out.println("Is " + pList.get(i).getName() + " playing? Y/N");
+            Scanner psc3 = new Scanner(System.in);
+            String answer = psc3.nextLine();
+            if(answer.equals("YES") || answer.equals("yes") || answer.equals("y") || answer.equals("Y")){
+                if(passwordAuth(pList, answer, i)==true){
+                    System.out.println("Welcome to highCard, " + pList.get(i).getName());
+                }
+                else{
+                    System.out.println("Looks like you weren't able to successfully enter your password, try again next time");
+                    continue;
+                }
+                //pList.get(i).setTrue();
+            }
+        }
+    }
+
+    public static boolean passwordAuth(List<Player> pList, String pw, int index){
+        boolean authenticate = false;
+        int passwordAttempts = 5;
+        boolean passwordValidation = false;
+        while(passwordValidation==false){
+            if(passwordAttempts==0){
+                System.out.println("Looks like you ran out of password attempts, sorry pal.");
+                authenticate = false;
+                break;
+            }
+            System.out.println("Enter Password: ");
+            Scanner psc4 = new Scanner(System.in);
+            String password = psc4.nextLine();
+            if(password.equals(pList.get(index).getName())){
+                authenticate = true;
+                passwordValidation = true;
+            }
+            else{
+                passwordAttempts--;
+                System.out.println("You entered an incorrect password, please try again. NOTE: You have " + passwordAttempts + " password attempts left");
+            }
+        }
+        return authenticate;
+
     }
 }
