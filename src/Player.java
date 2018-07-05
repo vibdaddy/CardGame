@@ -100,6 +100,8 @@ public class Player {
                             }
                         } while (numberError == true);  //Keep asking the user until the correct number is entered.
                         Deck.addDecks(enteredNumber);
+                        playerHand.put(card, playerHand.get(card)+1);
+                        answerValidation = true;
                     }
                 }
 

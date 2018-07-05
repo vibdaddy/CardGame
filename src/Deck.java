@@ -12,29 +12,41 @@ public class Deck {
 
     static HashMap<String, Integer> cardTracker = new HashMap<String, Integer>();
 
+    public static int counter = 0;
+
+    public static int maxCards;
+
     public static boolean conditionsMet;
 
     public static String card;
 
     public static int numDecks;
 
-    public static int counter;
+    //public static int counter;
 
     public static void setDecks(int num){
         numDecks = num;
         System.out.println("The number of decks has been set! We will be using " + numDecks + " deck(s)");
+        maxCards = numDecks * 52;
     }
 
     public static void addDecks(int num){
         numDecks = numDecks + num;
+        maxCards = numDecks * 52;
     }
 
     public static int getNumDecks(){
         return numDecks;
     }
 
+
+
     public static String cardGen() { //this method randomly generates the suit
         while(conditionsMet == false){
+            if(counter >= maxCards){
+                System.out.println("MAX CARD LIMIT REACHED");
+                break;
+            }
             String suit = "HDCS"; //string that contains all of the suits
             Random rand1 = new Random();
             int stringIndexPosition = rand1.nextInt(4); //generates a random index position between 1-4
@@ -66,18 +78,20 @@ public class Deck {
 
             if(cardTracker.get(card) == null){
                 cardTracker.put(card, 1);
+                counter++;
                 conditionsMet = true;
             }
             else if(cardTracker.get(card)>= numDecks){
                 //cardGen(map, numDecks);
                 //System.out.println("INDIVIDUAL CARD LIMIT REACHED");
-                counter++;
+                //counter++;
                 //throw new IllegalArgumentException("INDIVIDUAL CARD LIMIT REACHED");
-                System.out.println(counter);
+                //System.out.println(counter);
                 continue;
             }
             else if(cardTracker.get(card)>=1){
                 cardTracker.put(card, cardTracker.get(card)+1);
+                counter++;
                 conditionsMet = true;
             }
             //System.out.println(map);

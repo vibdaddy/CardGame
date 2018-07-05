@@ -99,8 +99,10 @@ public class Driver {
         }
 
         for(int i=0; i<playerList.size(); i++){
-            playerList.get(i).deposit(100);
-            playerList.get(i).withdraw(100);
+            //playerList.get(i).deposit(100);
+            //playerList.get(i).withdraw(100);
+            playerList.get(i).dealCards(53);
+            playerList.get(i).showHand();
         }
 
     }
