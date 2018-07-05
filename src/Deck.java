@@ -96,7 +96,7 @@ public class Deck {
             }
             //System.out.println(map);
             //System.out.println(map.size());
-            System.out.println(card);
+            //System.out.println(card);
         }
         conditionsMet = false;
         return card;

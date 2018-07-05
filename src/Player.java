@@ -1,22 +1,42 @@
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vaibhavsharma on 7/3/18.
  */
 public class Player {
 
-    static boolean isPlaying;
-    String password;
-    int pID;
-    String playerName;
-    double balance;
+    private boolean isPlaying;
+    private String password;
+    private int pID;
+    private String playerName;
+    private double balance;
+    private boolean winner;
     HashMap<String, Integer> playerHand = new HashMap<String, Integer>();
+    List<String> cardHolder = new ArrayList<String>();
 
     public Player(){
         setID(Counter.count());
         setFalse();
         balance = 100;
+    }
+
+    public List<String> getCardHolder(){
+        return cardHolder;
+    }
+
+    public void setWinner(){
+        winner = true;
+    }
+
+    public void resetWinner(){
+        winner = false;
+    }
+
+    public boolean checkWinner(){
+        return winner;
     }
 
     public void withdraw(int amount){
@@ -48,15 +68,15 @@ public class Player {
         return playerName;
     }
 
-    public static void setTrue(){
+    public void setTrue(){
         isPlaying = true;
     }
 
-    public static void setFalse(){
+    public void setFalse(){
         isPlaying = false;
     }
 
-    public static boolean getPlayerStatus(){
+    public boolean getPlayerStatus(){
         return isPlaying;
     }
 
@@ -64,15 +84,21 @@ public class Player {
         password = pw;
     }
 
+    public String getPassword(){
+        return password;
+    }
+
     public void showHand(){
         System.out.println(playerHand);
     }
 
     public void dealCards(int numCards){
+        String card = " ";
         for(int i=0; i<numCards; i++){
-            String card = Deck.cardGen();
+            card = Deck.cardGen();
             if(playerHand.get(card) == null){
                 playerHand.put(card, 1);
+                cardHolder.add(card);
                 //playerHand = true;
             }
             else if(playerHand.get(card)>= Deck.getNumDecks()){
@@ -101,6 +127,7 @@ public class Player {
                         } while (numberError == true);  //Keep asking the user until the correct number is entered.
                         Deck.addDecks(enteredNumber);
                         playerHand.put(card, playerHand.get(card)+1);
+                        cardHolder.add(card);
                         answerValidation = true;
                     }
                 }
@@ -109,6 +136,7 @@ public class Player {
             }
             else if(playerHand.get(card)>=1){
                 playerHand.put(card, playerHand.get(card)+1);
+                cardHolder.add(card);
                 //conditionsMet = true;
             }
             //playerHand.put(Deck.cardGen(),)

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vaibhavsharma on 7/3/18.
@@ -120,20 +121,50 @@ public class Driver {
     }
 
     public static void highCard(List<Player> pList){
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!WELCOME TO HIGH CARD!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         for(int i=0; i<pList.size(); i++){
             System.out.println("Is " + pList.get(i).getName() + " playing? Y/N");
-            Scanner psc3 = new Scanner(System.in);
-            String answer = psc3.nextLine();
-            if(answer.equals("YES") || answer.equals("yes") || answer.equals("y") || answer.equals("Y")){
-                if(passwordAuth(pList, answer, i)==true){
-                    System.out.println("Welcome to highCard, " + pList.get(i).getName());
+            boolean validAns = false;
+            while(validAns == false){
+                Scanner psc3 = new Scanner(System.in);
+                String answer = psc3.nextLine();
+                if(answer.equals("YES") || answer.equals("yes") || answer.equals("y") || answer.equals("Y")){
+                    if(passwordAuth(pList, answer, i)==true){
+                        System.out.println("Welcome to highCard, " + pList.get(i).getName());
+                        pList.get(i).setTrue();
+                        validAns = true;
+                    }
+                    else{
+                        System.out.println("Looks like you weren't able to successfully enter your password, try again next game");
+                        pList.get(i).setFalse();
+                        validAns = true;
+                    }
+                }
+                else if(answer.equals("NO") || answer.equals("no") || answer.equals("n") || answer.equals("N")){
+                    pList.get(i).setFalse();
+                    validAns=true;
                 }
                 else{
-                    System.out.println("Looks like you weren't able to successfully enter your password, try again next time");
-                    continue;
+                    System.out.println("Please enter a valid response Y/N");
                 }
-                //pList.get(i).setTrue();
             }
+
+        }
+
+        clear();
+
+        System.out.println("Cards are being dealt");
+
+        for(int i=0; i<pList.size(); i++){
+            if(pList.get(i).getPlayerStatus()==false){
+                continue;
+            }
+            pList.get(i).dealCards(1);
+            System.out.println(pList.get(i).getCardHolder().get(0));
         }
     }
 
@@ -143,14 +174,14 @@ public class Driver {
         boolean passwordValidation = false;
         while(passwordValidation==false){
             if(passwordAttempts==0){
-                System.out.println("Looks like you ran out of password attempts, sorry pal.");
+                //System.out.println("Looks like you ran out of password attempts, sorry pal.");
                 authenticate = false;
                 break;
             }
             System.out.println("Enter Password: ");
             Scanner psc4 = new Scanner(System.in);
             String password = psc4.nextLine();
-            if(password.equals(pList.get(index).getName())){
+            if(password.equals(pList.get(index).getPassword())){
                 authenticate = true;
                 passwordValidation = true;
             }
@@ -161,5 +192,17 @@ public class Driver {
         }
         return authenticate;
 
+    }
+
+    public static void clear(){
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
     }
 }
