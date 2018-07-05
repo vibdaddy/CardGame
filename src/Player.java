@@ -8,13 +8,14 @@ import java.util.List;
  */
 public class Player {
 
+    private int indexPosition; //NOT A UNIVERSAL VARIABLE, THIS IS SPECIFIC TO VAIBHAV SHARMA'S GAME
     private boolean isPlaying;
     private String password;
     private int pID;
     private String playerName;
     private double balance;
     private boolean winner;
-    private double bettingAmount;
+    private double bettingAmount = 0;
     HashMap<String, Integer> playerHand = new HashMap<String, Integer>();
     List<String> cardHolder = new ArrayList<String>();
 
@@ -22,6 +23,14 @@ public class Player {
         setID(Counter.count());
         setFalse();
         balance = 100;
+    }
+
+    public void setIndexPosition(int pos){ //NOT A UNIVERSAL METHOD, THIS IS SPECIFIC TO VAIBHAV SHARMA'S GAME
+        indexPosition = pos;
+    }
+
+    public int getIndexPosition(){ //NOT A UNIVERSAL METHOD, THIS IS SPECIFIC TO VAIBHAV SHARMA'S GAME
+        return indexPosition;
     }
 
     public void bet(int amount){
@@ -53,7 +62,7 @@ public class Player {
         System.out.println(amount + " was withdrawn from your account, " + getName() + ". Your new balance is: " + getBalance());
     }
 
-    public void deposit(int amount){
+    public void deposit(double amount){
         balance = balance + amount;
         System.out.println(amount + " was deposited to your account, " + getName() + ". Your new balance is: " + getBalance());
     }

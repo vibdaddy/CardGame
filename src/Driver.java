@@ -122,7 +122,11 @@ public class Driver {
 
     public static void highCard(List<Player> pList){
         //Game made by Vaibhav Sharma
-        String[] cardRank = {};
+        //int counter;
+        double winnings = 0.0;
+        List<Integer> playerRank = new ArrayList<Integer>();
+        int max = 0;
+        String[] cardRank = {"2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH", "AH", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD", "AD", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC", "AC", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "10S", "JS", "QS", "KS", "AS"};
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!!!!!!!WELCOME TO HIGH CARD!!!!!!!!");
@@ -163,6 +167,8 @@ public class Driver {
         System.out.println("The ranking of suits in ascending order is as follows: Hearts -> Diamonds -> Clubs -> Spades");
         System.out.println("EXAMPLE: If player one has an Ace of spades and player two has an Ace of hearts, player one will win the hand");
         System.out.println("An Ace is only treated as the high card, not one in any case");
+        System.out.println("Betting is an option, however betting will only occur once. There is only one round per player");
+        System.out.println("You have the option to bet or pass, if you pass there is no penalty, but you will not have another chance to bet.");
         System.out.println("NOTE, the only time a tie will occur is if players are using more than one deck");
         System.out.println("If there is a tie (for example player 1 has an Ace of Spades and player 2 has the same card) the pot will be split amongst the winners");
 
@@ -182,7 +188,97 @@ public class Driver {
             if (pList.get(i).getPlayerStatus() == false) {
                 continue;
             }
+            System.out.println(pList.get(i).getName() + " You have: " + pList.get(i).getCardHolder().get(0));
+            boolean validAns1 = false;
+            while(validAns1 == false){
+                System.out.println("Would you like to pass or bet? Answer: pass/bet");
+                Scanner psc5 = new Scanner(System.in);
+                String playerAnswer = psc5.nextLine();
+                if(playerAnswer.equals("pass")||playerAnswer.equals("Pass")||playerAnswer.equals("PASS")){
+                    System.out.println("Understood, moving on to the next player");
+                    winnings = winnings +1;
+                    validAns1 = true;
+                }
+                else if(playerAnswer.equals("bet")||playerAnswer.equals("Bet")||playerAnswer.equals("BET")){
+                    System.out.println("How much would you like to bet?");
+                    int enteredNumber = 0;
+                    Scanner myScanner = new Scanner(System.in);
+                    boolean numberError = false;
+                    String enteredString = "";
+                    do {
+                        try {
+                            System.out.print("Enter amount: ");
+                            enteredString = myScanner.next();  //Read into a string
+                            enteredNumber = Integer.parseInt(enteredString.trim());  //then cast as a integer
+                            numberError = false;  //if we haven't bailed out, then the number must be valid.
+                        } catch (Exception e) {
+                            System.out.println("Your entry: \"" +
+                                    enteredString + "\" is invalid...Please try again");
+                            numberError = true;  //Uh-Oh...We have a problem.
+                        }
+                    } while (numberError == true);
+                    System.out.println("You will be betting $" + enteredNumber);
+                    pList.get(i).bet(enteredNumber + 1);
+                    winnings = winnings+enteredNumber+1;
+                    System.out.println(pList.get(i).getBettingAmount());
+                    validAns1 = true;
+                }
+                else{
+                    System.out.println("That was not a valid input, please try again");
+                }
+
+            }
         }
+
+        for(int i=0; i<pList.size(); i++){
+            if (pList.get(i).getPlayerStatus() == false) {
+                continue;
+            }
+            int counter = 0;
+            System.out.println(pList.get(i).getCardHolder().get(0));
+            String playerCard = pList.get(i).getCardHolder().get(0);
+            for(String j : cardRank){
+                counter++;
+                if(j.equals(playerCard)){
+                    pList.get(i).setIndexPosition(counter);
+                }
+                //System.out.println(j);
+            }
+        }
+
+        for(int i=0; i<pList.size(); i++){
+            int playerPosition = pList.get(i).getIndexPosition();
+            if(playerPosition > max){
+                max = playerPosition;
+                playerRank.add(pList.get(i).getID());
+            }
+        }
+        for(int i=0; i<pList.size(); i++){
+            if(pList.get(i).getID()==playerRank.get(playerRank.size() - 1)){
+
+                pList.get(i).setWinner();
+                break;
+            }
+
+
+        }
+
+        for(int i=0; i<pList.size(); i++){
+            if(pList.get(i).checkWinner()==true){
+                System.out.println(pList.get(i).getName() + "You have won!");
+                System.out.println("$" + winnings + " will be added to your account");
+                pList.get(i).deposit(winnings);
+            }
+            else if(pList.get(i).checkWinner()==false){
+                System.out.println(pList.get(i).getName() + "You have lost");
+                pList.get(i).deposit(pList.get(i).getBettingAmount()+1);
+                System.out.println(pList.get(i).getName()+", " +pList.get(i).getBettingAmount()+1 + "will be withdrawn from your account");
+            }
+
+        }
+
+
+
     }
 
     public static boolean passwordAuth(List<Player> pList, String pw, int index){
