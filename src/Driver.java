@@ -98,12 +98,22 @@ public class Driver {
 
         }
 
-        for(int i=0; i<playerList.size(); i++){
+        /*for(int i=0; i<playerList.size(); i++){
             //playerList.get(i).deposit(100);
             //playerList.get(i).withdraw(100);
             playerList.get(i).dealCards(53);
             playerList.get(i).showHand();
-        }
+        }*/
 
+        testDeal(playerList);
+
+    }
+
+    public static void testDeal(List<Player> pList){
+        for(int i=0; i<pList.size(); i++){
+            System.out.println("Lets deal cards to " + pList.get(i).getName());
+            pList.get(i).dealCards(27);
+            pList.get(i).showHand();
+        }
     }
 }
