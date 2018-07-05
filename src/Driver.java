@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -109,6 +111,7 @@ public class Driver {
         //testDeal(playerList);
 
         highCard(playerList);
+        game2();
 
     }
 
@@ -271,7 +274,7 @@ public class Driver {
             }
             else if(pList.get(i).checkWinner()==false){
                 System.out.println(pList.get(i).getName() + "You have lost");
-                pList.get(i).deposit(pList.get(i).getBettingAmount()+1);
+                pList.get(i).withdraw(pList.get(i).getBettingAmount());
                 System.out.println(pList.get(i).getName()+", " +pList.get(i).getBettingAmount()+1 + "will be withdrawn from your account");
             }
 
@@ -317,5 +320,198 @@ public class Driver {
         System.out.println(" ");
         System.out.println(" ");
         System.out.println(" ");
+    }
+
+
+    public static void game2() {
+
+
+        System.out.println("The Rules:");
+
+
+        System.out.println("-The basic premise of the game is that you want to have a hand value that is closer to 21 than that of the dealer, without going over 21");
+
+
+        System.out.println("-An ace is worth 1. \n-The cards from 2 through 9 are valued at their face value.\n-The 10, Jack, Queen, and King are all valued at 10.");
+
+
+        System.out.println("-Dealer must draw cards until he has a total of 17 or more");
+
+
+        System.out.println("-If you draw a card that makes your hand total go over 21, your hand is a bust. That is an automatic loser. ");
+
+
+        System.out.println("-If the dealer busts by going over 21, player wins.");
+
+
+        System.out.println("-If both a player and the dealer have blackjack, the hand is a tie or push.");
+
+
+        System.out.println("-If user asks for another card and number is under 21 they can stay or ask for another card until they choose to stop or they bust");
+
+
+        System.out.println("");
+
+
+        String anotherCard, playAgain = "y", cont = null;
+
+
+        int nextCard, card1, card2, dCard1, dCard2;
+
+
+        int cardTotal = 0, dTotal = 0;
+
+
+        Scanner keyboard = new Scanner(System.in);
+
+
+        Random random = new Random();
+
+
+        boolean answerVal = false;
+
+
+        while (playAgain == "y")
+
+
+        {
+
+
+            dCard1 = random.nextInt(10) + 1;
+
+
+            dCard2 = random.nextInt(10) + 1;
+
+
+            card1 = random.nextInt(10) + 1;
+
+
+            card2 = random.nextInt(10) + 1;
+
+
+            cardTotal = card1 + card2;
+
+
+            dTotal = dCard1 + dCard2;
+
+
+            System.out.println("Dealer shows: " + dCard1);
+
+
+            System.out.println("First Cards: " + card1 + ", " + card2);
+
+
+            System.out.println("Yout current total is: " + cardTotal);
+
+
+            System.out.print("Another Card (y/n)?: ");
+
+
+            anotherCard = keyboard.nextLine();
+
+
+            nextCard = random.nextInt(10) + 1;
+
+
+            cardTotal += nextCard;
+
+
+            System.out.println("Card: " + nextCard);
+
+
+            System.out.println("Total: " + cardTotal);
+
+
+            if (cardTotal > 21)
+
+
+            {
+
+
+                System.out.println("You busted, Dealer Wins");
+
+
+                System.out.println("Do you want to play again? (y/n): ");
+
+
+                playAgain = keyboard.nextLine();
+
+
+            }
+
+
+            if (cardTotal < 21) {
+
+
+                System.out.print("Another Card (y/n)?: ");
+
+
+                anotherCard = keyboard.nextLine();
+
+
+            }
+
+
+            if (anotherCard == "n") {
+
+
+                System.out.print("Press c to continue dealers cards");
+
+
+            }
+
+
+            cont = keyboard.nextLine();
+
+
+            while (cont == "c" && dTotal < 17)
+
+
+            {
+
+
+                nextCard = random.nextInt(10) + 1;
+
+
+                dTotal += nextCard;
+
+
+                if (dTotal > 21)
+
+
+                {
+
+
+                    System.out.println("Dealer Busts, You Win!");
+
+
+                    // Deposit to player account
+
+
+                    System.out.println("Play Again? (y/n): ");
+
+
+                    playAgain = keyboard.nextLine();
+
+
+                    if (playAgain.equalsIgnoreCase("y"))
+
+
+                        playAgain = "y";
+
+
+                    else
+
+
+                        System.exit(0);
+
+
+                }
+
+
+            }
+
+
+        }
     }
 }

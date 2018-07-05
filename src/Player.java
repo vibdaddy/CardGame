@@ -57,7 +57,7 @@ public class Player {
         return winner;
     }
 
-    public void withdraw(int amount){
+    public void withdraw(double amount){
         balance = balance - amount;
         System.out.println(amount + " was withdrawn from your account, " + getName() + ". Your new balance is: " + getBalance());
     }
